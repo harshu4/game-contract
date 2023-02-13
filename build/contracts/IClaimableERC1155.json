@@ -1,0 +1,551 @@
+{
+  "contractName": "IClaimableERC1155",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "claimer",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "receiver",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "quantityClaimed",
+          "type": "uint256"
+        }
+      ],
+      "name": "TokensClaimed",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_receiver",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_quantity",
+          "type": "uint256"
+        }
+      ],
+      "name": "claim",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_claimer",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_quantity",
+          "type": "uint256"
+        }
+      ],
+      "name": "verifyClaim",
+      "outputs": [],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.18+commit.87f61d96\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"claimer\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"quantityClaimed\",\"type\":\"uint256\"}],\"name\":\"TokensClaimed\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_receiver\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_quantity\",\"type\":\"uint256\"}],\"name\":\"claim\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_claimer\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_quantity\",\"type\":\"uint256\"}],\"name\":\"verifyClaim\",\"outputs\":[],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"events\":{\"TokensClaimed(address,address,uint256,uint256)\":{\"details\":\"Emitted when tokens are claimed\"}},\"kind\":\"dev\",\"methods\":{\"claim(address,uint256,uint256)\":{\"details\":\"The logic in the `verifyClaim` function determines whether the caller is authorized to mint NFTs.\",\"params\":{\"_quantity\":\"The number of tokens to mint.\",\"_receiver\":\"The recipient of the tokens to mint.\",\"_tokenId\":\"The tokenId of the lazy minted NFT to mint.\"}},\"verifyClaim(address,uint256,uint256)\":{\"details\":\"Checks a request to claim NFTs against a custom condition.\",\"params\":{\"_claimer\":\"Caller of the claim function.\",\"_quantity\":\"The number of NFTs being claimed.\",\"_tokenId\":\"The tokenId of the lazy minted NFT to mint.\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"claim(address,uint256,uint256)\":{\"notice\":\"Lets an address claim multiple lazy minted NFTs at once to a recipient.                   Contract creators should override this function to create custom logic for claiming,                   for e.g. price collection, allowlist, max quantity, etc.\"},\"verifyClaim(address,uint256,uint256)\":{\"notice\":\"Override this function to add logic for claim verification, based on conditions                   such as allowlist, price, max quantity etc.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"@thirdweb-dev/contracts/extension/interface/IClaimableERC1155.sol\":\"IClaimableERC1155\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@thirdweb-dev/contracts/extension/interface/IClaimableERC1155.sol\":{\"keccak256\":\"0xb86d1bd90f1ba4b7c0900ba219aff290e8907a052f595da01ab28f1758520a7c\",\"license\":\"Apache-2.0\",\"urls\":[\"bzz-raw://3141d3da54c26ea848b379c6bf7303933803bde121dd3905afab78b93554fd43\",\"dweb:/ipfs/Qmchr4tczBwxhLKXitd1dsHE1y5v1dVm9sMDLVkXq3yQr3\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: Apache-2.0\npragma solidity ^0.8.0;\n\ninterface IClaimableERC1155 {\n    /// @dev Emitted when tokens are claimed\n    event TokensClaimed(\n        address indexed claimer,\n        address indexed receiver,\n        uint256 indexed tokenId,\n        uint256 quantityClaimed\n    );\n\n    /**\n     *  @notice          Lets an address claim multiple lazy minted NFTs at once to a recipient.\n     *                   Contract creators should override this function to create custom logic for claiming,\n     *                   for e.g. price collection, allowlist, max quantity, etc.\n     *\n     *  @dev             The logic in the `verifyClaim` function determines whether the caller is authorized to mint NFTs.\n     *\n     *  @param _receiver  The recipient of the tokens to mint.\n     *  @param _tokenId   The tokenId of the lazy minted NFT to mint.\n     *  @param _quantity  The number of tokens to mint.\n     */\n    function claim(\n        address _receiver,\n        uint256 _tokenId,\n        uint256 _quantity\n    ) external payable;\n\n    /**\n     *  @notice          Override this function to add logic for claim verification, based on conditions\n     *                   such as allowlist, price, max quantity etc.\n     *\n     *  @dev             Checks a request to claim NFTs against a custom condition.\n     *\n     *  @param _claimer   Caller of the claim function.\n     *  @param _tokenId   The tokenId of the lazy minted NFT to mint.\n     *  @param _quantity  The number of NFTs being claimed.\n     */\n    function verifyClaim(\n        address _claimer,\n        uint256 _tokenId,\n        uint256 _quantity\n    ) external view;\n}\n",
+  "sourcePath": "@thirdweb-dev/contracts/extension/interface/IClaimableERC1155.sol",
+  "ast": {
+    "absolutePath": "@thirdweb-dev/contracts/extension/interface/IClaimableERC1155.sol",
+    "exportedSymbols": {
+      "IClaimableERC1155": [
+        3020
+      ]
+    },
+    "id": 3021,
+    "license": "Apache-2.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 2988,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "39:23:20"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "IClaimableERC1155",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 3020,
+        "linearizedBaseContracts": [
+          3020
+        ],
+        "name": "IClaimableERC1155",
+        "nameLocation": "74:17:20",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 2989,
+              "nodeType": "StructuredDocumentation",
+              "src": "98:40:20",
+              "text": "@dev Emitted when tokens are claimed"
+            },
+            "eventSelector": "ff097c7d8b1957a4ff09ef1361b5fb54dcede3941ba836d0beb9d10bec725de6",
+            "id": 2999,
+            "name": "TokensClaimed",
+            "nameLocation": "149:13:20",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 2998,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2991,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "claimer",
+                  "nameLocation": "188:7:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2999,
+                  "src": "172:23:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2990,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "172:7:20",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 2993,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "receiver",
+                  "nameLocation": "221:8:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2999,
+                  "src": "205:24:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2992,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "205:7:20",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 2995,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "tokenId",
+                  "nameLocation": "255:7:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2999,
+                  "src": "239:23:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2994,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "239:7:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 2997,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "quantityClaimed",
+                  "nameLocation": "280:15:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2999,
+                  "src": "272:23:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2996,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "272:7:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "162:139:20"
+            },
+            "src": "143:159:20"
+          },
+          {
+            "documentation": {
+              "id": 3000,
+              "nodeType": "StructuredDocumentation",
+              "src": "308:626:20",
+              "text": "  @notice          Lets an address claim multiple lazy minted NFTs at once to a recipient.\n                   Contract creators should override this function to create custom logic for claiming,\n                   for e.g. price collection, allowlist, max quantity, etc.\n  @dev             The logic in the `verifyClaim` function determines whether the caller is authorized to mint NFTs.\n  @param _receiver  The recipient of the tokens to mint.\n  @param _tokenId   The tokenId of the lazy minted NFT to mint.\n  @param _quantity  The number of tokens to mint."
+            },
+            "functionSelector": "2bc43fd9",
+            "id": 3009,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "claim",
+            "nameLocation": "948:5:20",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3007,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3002,
+                  "mutability": "mutable",
+                  "name": "_receiver",
+                  "nameLocation": "971:9:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3009,
+                  "src": "963:17:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3001,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "963:7:20",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3004,
+                  "mutability": "mutable",
+                  "name": "_tokenId",
+                  "nameLocation": "998:8:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3009,
+                  "src": "990:16:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3003,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "990:7:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3006,
+                  "mutability": "mutable",
+                  "name": "_quantity",
+                  "nameLocation": "1024:9:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3009,
+                  "src": "1016:17:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3005,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1016:7:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "953:86:20"
+            },
+            "returnParameters": {
+              "id": 3008,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1056:0:20"
+            },
+            "scope": 3020,
+            "src": "939:118:20",
+            "stateMutability": "payable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 3010,
+              "nodeType": "StructuredDocumentation",
+              "src": "1063:469:20",
+              "text": "  @notice          Override this function to add logic for claim verification, based on conditions\n                   such as allowlist, price, max quantity etc.\n  @dev             Checks a request to claim NFTs against a custom condition.\n  @param _claimer   Caller of the claim function.\n  @param _tokenId   The tokenId of the lazy minted NFT to mint.\n  @param _quantity  The number of NFTs being claimed."
+            },
+            "functionSelector": "4bbb1abf",
+            "id": 3019,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "verifyClaim",
+            "nameLocation": "1546:11:20",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3017,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3012,
+                  "mutability": "mutable",
+                  "name": "_claimer",
+                  "nameLocation": "1575:8:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3019,
+                  "src": "1567:16:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 3011,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1567:7:20",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3014,
+                  "mutability": "mutable",
+                  "name": "_tokenId",
+                  "nameLocation": "1601:8:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3019,
+                  "src": "1593:16:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3013,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1593:7:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3016,
+                  "mutability": "mutable",
+                  "name": "_quantity",
+                  "nameLocation": "1627:9:20",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3019,
+                  "src": "1619:17:20",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3015,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1619:7:20",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1557:85:20"
+            },
+            "returnParameters": {
+              "id": 3018,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1656:0:20"
+            },
+            "scope": 3020,
+            "src": "1537:120:20",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 3021,
+        "src": "64:1595:20",
+        "usedErrors": []
+      }
+    ],
+    "src": "39:1621:20"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.18+commit.87f61d96.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.11",
+  "updatedAt": "2023-02-13T12:05:00.525Z",
+  "devdoc": {
+    "events": {
+      "TokensClaimed(address,address,uint256,uint256)": {
+        "details": "Emitted when tokens are claimed"
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "claim(address,uint256,uint256)": {
+        "details": "The logic in the `verifyClaim` function determines whether the caller is authorized to mint NFTs.",
+        "params": {
+          "_quantity": "The number of tokens to mint.",
+          "_receiver": "The recipient of the tokens to mint.",
+          "_tokenId": "The tokenId of the lazy minted NFT to mint."
+        }
+      },
+      "verifyClaim(address,uint256,uint256)": {
+        "details": "Checks a request to claim NFTs against a custom condition.",
+        "params": {
+          "_claimer": "Caller of the claim function.",
+          "_quantity": "The number of NFTs being claimed.",
+          "_tokenId": "The tokenId of the lazy minted NFT to mint."
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "claim(address,uint256,uint256)": {
+        "notice": "Lets an address claim multiple lazy minted NFTs at once to a recipient.                   Contract creators should override this function to create custom logic for claiming,                   for e.g. price collection, allowlist, max quantity, etc."
+      },
+      "verifyClaim(address,uint256,uint256)": {
+        "notice": "Override this function to add logic for claim verification, based on conditions                   such as allowlist, price, max quantity etc."
+      }
+    },
+    "version": 1
+  }
+}

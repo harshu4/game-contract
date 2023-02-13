@@ -1,0 +1,441 @@
+{
+  "contractName": "ILazyMint",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "startTokenId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "endTokenId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "baseURI",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes",
+          "name": "encryptedBaseURI",
+          "type": "bytes"
+        }
+      ],
+      "name": "TokensLazyMinted",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "baseURIForTokens",
+          "type": "string"
+        },
+        {
+          "internalType": "bytes",
+          "name": "extraData",
+          "type": "bytes"
+        }
+      ],
+      "name": "lazyMint",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "batchId",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.18+commit.87f61d96\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"startTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"endTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"baseURI\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"bytes\",\"name\":\"encryptedBaseURI\",\"type\":\"bytes\"}],\"name\":\"TokensLazyMinted\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"baseURIForTokens\",\"type\":\"string\"},{\"internalType\":\"bytes\",\"name\":\"extraData\",\"type\":\"bytes\"}],\"name\":\"lazyMint\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"batchId\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"events\":{\"TokensLazyMinted(uint256,uint256,string,bytes)\":{\"details\":\"Emitted when tokens are lazy minted.\"}},\"kind\":\"dev\",\"methods\":{\"lazyMint(uint256,string,bytes)\":{\"params\":{\"amount\":\"The number of NFTs to lazy mint.\",\"baseURIForTokens\":\"The base URI for the 'n' number of NFTs being lazy minted, where the metadata for each                          of those NFTs is `${baseURIForTokens}/${tokenId}`.\",\"extraData\":\"Additional bytes data to be used at the discretion of the consumer of the contract.\"},\"returns\":{\"batchId\":\"        A unique integer identifier for the batch of NFTs lazy minted together.\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"lazyMint(uint256,string,bytes)\":{\"notice\":\"Lazy mints a given amount of NFTs.\"}},\"notice\":\"Thirdweb's `LazyMint` is a contract extension for any base NFT contract. It lets you 'lazy mint' any number of NFTs  at once. Here, 'lazy mint' means defining the metadata for particular tokenIds of your NFT contract, without actually  minting a non-zero balance of NFTs of those tokenIds.\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"@thirdweb-dev/contracts/extension/interface/ILazyMint.sol\":\"ILazyMint\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@thirdweb-dev/contracts/extension/interface/ILazyMint.sol\":{\"keccak256\":\"0x7584a78d071f12fc16dac6db37355ca1d5e6869ccfb27ea412223101a17acd25\",\"license\":\"Apache-2.0\",\"urls\":[\"bzz-raw://c8e386f850a3d3ea01c9c9ca2fe853e878cf06f0c5abb2f40717dc6a3483c024\",\"dweb:/ipfs/QmNvQDrXxCZM3FacMTubMourh8EwCYEduvL9Mgq4U3UAnU\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: Apache-2.0\npragma solidity ^0.8.0;\n\n/**\n *  Thirdweb's `LazyMint` is a contract extension for any base NFT contract. It lets you 'lazy mint' any number of NFTs\n *  at once. Here, 'lazy mint' means defining the metadata for particular tokenIds of your NFT contract, without actually\n *  minting a non-zero balance of NFTs of those tokenIds.\n */\n\ninterface ILazyMint {\n    /// @dev Emitted when tokens are lazy minted.\n    event TokensLazyMinted(uint256 indexed startTokenId, uint256 endTokenId, string baseURI, bytes encryptedBaseURI);\n\n    /**\n     *  @notice Lazy mints a given amount of NFTs.\n     *\n     *  @param amount           The number of NFTs to lazy mint.\n     *\n     *  @param baseURIForTokens The base URI for the 'n' number of NFTs being lazy minted, where the metadata for each\n     *                          of those NFTs is `${baseURIForTokens}/${tokenId}`.\n     *\n     *  @param extraData        Additional bytes data to be used at the discretion of the consumer of the contract.\n     *\n     *  @return batchId         A unique integer identifier for the batch of NFTs lazy minted together.\n     */\n    function lazyMint(\n        uint256 amount,\n        string calldata baseURIForTokens,\n        bytes calldata extraData\n    ) external returns (uint256 batchId);\n}\n",
+  "sourcePath": "@thirdweb-dev/contracts/extension/interface/ILazyMint.sol",
+  "ast": {
+    "absolutePath": "@thirdweb-dev/contracts/extension/interface/ILazyMint.sol",
+    "exportedSymbols": {
+      "ILazyMint": [
+        3070
+      ]
+    },
+    "id": 3071,
+    "license": "Apache-2.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3045,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "39:23:22"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "ILazyMint",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": {
+          "id": 3046,
+          "nodeType": "StructuredDocumentation",
+          "src": "64:307:22",
+          "text": "  Thirdweb's `LazyMint` is a contract extension for any base NFT contract. It lets you 'lazy mint' any number of NFTs\n  at once. Here, 'lazy mint' means defining the metadata for particular tokenIds of your NFT contract, without actually\n  minting a non-zero balance of NFTs of those tokenIds."
+        },
+        "fullyImplemented": false,
+        "id": 3070,
+        "linearizedBaseContracts": [
+          3070
+        ],
+        "name": "ILazyMint",
+        "nameLocation": "383:9:22",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 3047,
+              "nodeType": "StructuredDocumentation",
+              "src": "399:45:22",
+              "text": "@dev Emitted when tokens are lazy minted."
+            },
+            "eventSelector": "2a0365091ef1a40953c670dce28177e37520648a6fdc91506bffac0ab045570d",
+            "id": 3057,
+            "name": "TokensLazyMinted",
+            "nameLocation": "455:16:22",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 3056,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3049,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "startTokenId",
+                  "nameLocation": "488:12:22",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3057,
+                  "src": "472:28:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3048,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "472:7:22",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3051,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "endTokenId",
+                  "nameLocation": "510:10:22",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3057,
+                  "src": "502:18:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3050,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "502:7:22",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3053,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "baseURI",
+                  "nameLocation": "529:7:22",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3057,
+                  "src": "522:14:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3052,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "522:6:22",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3055,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "encryptedBaseURI",
+                  "nameLocation": "544:16:22",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3057,
+                  "src": "538:22:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3054,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "538:5:22",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "471:90:22"
+            },
+            "src": "449:113:22"
+          },
+          {
+            "documentation": {
+              "id": 3058,
+              "nodeType": "StructuredDocumentation",
+              "src": "568:577:22",
+              "text": "  @notice Lazy mints a given amount of NFTs.\n  @param amount           The number of NFTs to lazy mint.\n  @param baseURIForTokens The base URI for the 'n' number of NFTs being lazy minted, where the metadata for each\n                          of those NFTs is `${baseURIForTokens}/${tokenId}`.\n  @param extraData        Additional bytes data to be used at the discretion of the consumer of the contract.\n  @return batchId         A unique integer identifier for the batch of NFTs lazy minted together."
+            },
+            "functionSelector": "d37c353b",
+            "id": 3069,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "lazyMint",
+            "nameLocation": "1159:8:22",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3065,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3060,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "1185:6:22",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3069,
+                  "src": "1177:14:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3059,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1177:7:22",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3062,
+                  "mutability": "mutable",
+                  "name": "baseURIForTokens",
+                  "nameLocation": "1217:16:22",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3069,
+                  "src": "1201:32:22",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 3061,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1201:6:22",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 3064,
+                  "mutability": "mutable",
+                  "name": "extraData",
+                  "nameLocation": "1258:9:22",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3069,
+                  "src": "1243:24:22",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 3063,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1243:5:22",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1167:106:22"
+            },
+            "returnParameters": {
+              "id": 3068,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3067,
+                  "mutability": "mutable",
+                  "name": "batchId",
+                  "nameLocation": "1300:7:22",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 3069,
+                  "src": "1292:15:22",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 3066,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1292:7:22",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1291:17:22"
+            },
+            "scope": 3070,
+            "src": "1150:159:22",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 3071,
+        "src": "373:938:22",
+        "usedErrors": []
+      }
+    ],
+    "src": "39:1273:22"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.18+commit.87f61d96.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.11",
+  "updatedAt": "2023-02-13T12:05:00.526Z",
+  "devdoc": {
+    "events": {
+      "TokensLazyMinted(uint256,uint256,string,bytes)": {
+        "details": "Emitted when tokens are lazy minted."
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "lazyMint(uint256,string,bytes)": {
+        "params": {
+          "amount": "The number of NFTs to lazy mint.",
+          "baseURIForTokens": "The base URI for the 'n' number of NFTs being lazy minted, where the metadata for each                          of those NFTs is `${baseURIForTokens}/${tokenId}`.",
+          "extraData": "Additional bytes data to be used at the discretion of the consumer of the contract."
+        },
+        "returns": {
+          "batchId": "        A unique integer identifier for the batch of NFTs lazy minted together."
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "lazyMint(uint256,string,bytes)": {
+        "notice": "Lazy mints a given amount of NFTs."
+      }
+    },
+    "notice": "Thirdweb's `LazyMint` is a contract extension for any base NFT contract. It lets you 'lazy mint' any number of NFTs  at once. Here, 'lazy mint' means defining the metadata for particular tokenIds of your NFT contract, without actually  minting a non-zero balance of NFTs of those tokenIds.",
+    "version": 1
+  }
+}

@@ -1,0 +1,289 @@
+{
+  "contractName": "IERC20Metadata",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "name",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "symbol",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "decimals",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.18+commit.87f61d96\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"decimals\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"see https://github.com/ethereum/EIPs/issues/20\",\"kind\":\"dev\",\"methods\":{},\"title\":\"ERC20Metadata interface\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"@thirdweb-dev/contracts/eip/interface/IERC20Metadata.sol\":\"IERC20Metadata\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@thirdweb-dev/contracts/eip/interface/IERC20Metadata.sol\":{\"keccak256\":\"0xc2500d7a12573fc6f9714d806bec722ad4110a68e6dd14b69903042421001734\",\"license\":\"Apache-2.0\",\"urls\":[\"bzz-raw://02423735619f14f3a13fae0ad6e407385565f159ad956c8bd1c14b3605a73a65\",\"dweb:/ipfs/QmYfYWh5wGidaQ7qDbC8oSuQ3gsnd3moJbWZ8yBzMnrYz1\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: Apache-2.0\npragma solidity ^0.8.0;\n\n/**\n * @title ERC20Metadata interface\n * @dev see https://github.com/ethereum/EIPs/issues/20\n */\ninterface IERC20Metadata {\n    function name() external view returns (string memory);\n\n    function symbol() external view returns (string memory);\n\n    function decimals() external view returns (uint8);\n}\n",
+  "sourcePath": "@thirdweb-dev/contracts/eip/interface/IERC20Metadata.sol",
+  "ast": {
+    "absolutePath": "@thirdweb-dev/contracts/eip/interface/IERC20Metadata.sol",
+    "exportedSymbols": {
+      "IERC20Metadata": [
+        2001
+      ]
+    },
+    "id": 2002,
+    "license": "Apache-2.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1984,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "39:23:8"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "IERC20Metadata",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": {
+          "id": 1985,
+          "nodeType": "StructuredDocumentation",
+          "src": "64:96:8",
+          "text": " @title ERC20Metadata interface\n @dev see https://github.com/ethereum/EIPs/issues/20"
+        },
+        "fullyImplemented": false,
+        "id": 2001,
+        "linearizedBaseContracts": [
+          2001
+        ],
+        "name": "IERC20Metadata",
+        "nameLocation": "171:14:8",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "functionSelector": "06fdde03",
+            "id": 1990,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "name",
+            "nameLocation": "201:4:8",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1986,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "205:2:8"
+            },
+            "returnParameters": {
+              "id": 1989,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1988,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1990,
+                  "src": "231:13:8",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 1987,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "231:6:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "230:15:8"
+            },
+            "scope": 2001,
+            "src": "192:54:8",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "95d89b41",
+            "id": 1995,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "symbol",
+            "nameLocation": "261:6:8",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1991,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "267:2:8"
+            },
+            "returnParameters": {
+              "id": 1994,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1993,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1995,
+                  "src": "293:13:8",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 1992,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "293:6:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "292:15:8"
+            },
+            "scope": 2001,
+            "src": "252:56:8",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "313ce567",
+            "id": 2000,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "decimals",
+            "nameLocation": "323:8:8",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1996,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "331:2:8"
+            },
+            "returnParameters": {
+              "id": 1999,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1998,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2000,
+                  "src": "357:5:8",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  },
+                  "typeName": {
+                    "id": 1997,
+                    "name": "uint8",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "357:5:8",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint8",
+                      "typeString": "uint8"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "356:7:8"
+            },
+            "scope": 2001,
+            "src": "314:50:8",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 2002,
+        "src": "161:205:8",
+        "usedErrors": []
+      }
+    ],
+    "src": "39:328:8"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.18+commit.87f61d96.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.11",
+  "updatedAt": "2023-02-13T12:05:00.514Z",
+  "devdoc": {
+    "details": "see https://github.com/ethereum/EIPs/issues/20",
+    "kind": "dev",
+    "methods": {},
+    "title": "ERC20Metadata interface",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
