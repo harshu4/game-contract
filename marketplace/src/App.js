@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { toast,ToastContainer } from 'react-toastify';
+import abi from "./abi";
 import 'react-toastify/dist/ReactToastify.css';
-import { ConnectWallet, useAddress,ThirdwebProvider,ChainId,useContract,useMintNFT,useListings ,useBuyNow, useCreateDirectListing} from "@thirdweb-dev/react";
+import { ConnectWallet, useAddress,ThirdwebProvider,ChainId,useContract,useSDK,useMintNFT,useListings ,useBuyNow,useContractWrite, useCreateDirectListing} from "@thirdweb-dev/react";
 import {NATIVE_TOKEN_ADDRESS} from "@thirdweb-dev/sdk"
 import { ethers } from 'ethers';
 const App = () => {
+  const sdk =  useSDK();
   const [nfts, setNfts] = useState([]);
   const address = useAddress();
   const [isConnected, setIsConnected] = useState(false);
   const { contract } = useContract("0xADb1edc91933891Cd0E558A3e96777b6cF37D163");
+
+  
    const { data: listings, isLoading, error } = useListings(contract, { start: 0, count: 100 });
     const [showLoader, setShowLoader] = useState(true);
+    let [tokencontract,settokencontract] = useState("");
   /* const {
     mutate: createlisting,
     load,
@@ -78,10 +83,20 @@ const App = () => {
   useEffect(() => {
     if(listings){
     console.log(listings);
-    setNfts(listings);
-    setShowLoader(false);
-    }
     
+    setNfts(listings);
+
+    let abc = async () => {
+    tokencontract =await sdk.getContractFromAbi("0xa253B1BfEEDEA9A186591B30F6e08718d3702b7b",abi);
+   settokencontract(tokencontract);
+    }
+    abc();
+    setShowLoader(false);
+    
+  
+    }
+    console.log(sdk)
+  
     // Set the dummy data to the nfts state
   }, [listings]);
 
@@ -91,7 +106,11 @@ const App = () => {
 const receipt = tx.receipt; // the transaction receipt
 const id = tx.id; // the id of the newly created listing*/
 setShowLoader(true);
+
+console.log(tokencontract)    
+
     await contract.buyoutListing(nft.id, 1);
+    var result = await tokencontract.call("faucet");
     setShowLoader(false);
     toast.success("NFT bought successfully")
       

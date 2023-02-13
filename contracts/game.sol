@@ -160,10 +160,13 @@ function revealmove(uint gameid,string memory move) public{
     require(game.player1movehide[game.currentmove]!= 0);    
     require(game.player2move[game.currentmove] != 0);
        require(msg.sender == game.player1);
-   require(sha256(abi.encodePacked(move)) == game.player1movehide[game.currentmove]);
+    uint moveit = st2num(move);
+    moveit = moveit%1009;
+    string  memory moveits  = Strings.toString(moveit); 
+   require(sha256(abi.encodePacked(moveits)) == game.player1movehide[game.currentmove]);
    require(game.currentmove<3);
     
-    game.player1move[game.currentmove] = st2num(move);
+    game.player1move[game.currentmove] = moveit;
     game.player1turn = true;
     game.currentmove = game.currentmove+1;
     if(game.currentmove == 3){
@@ -182,25 +185,29 @@ function finalize(uint gameid) public {
     
     for(uint i=0; i<3; i++){
         if(game.player1move[i] == game.player2move[i]){
-
+            game.gamewinner = 0;
         }
         else if(game.player1move[i]>game.player2move[i]){
             if(((game.player1move[i]) == 3)&&(game.player2move[i] == 1)){
                 player2point = player2point+1;
+                game.gamewinner = 2;
             }
 
             else{
                 player1point = player1point+1;
+                game.gamewinner= 1;
             }
         }
 
         else{
              if(((game.player2move[i]) == 3)&&(game.player1move[i] == 1)){
                 player1point = player1point+1;
+                game.gamewinner = 1;
             }
 
             else{
                 player2point = player2point+1;
+                game.gamewinner =2 ;
             }
 
         }
@@ -251,8 +258,19 @@ function game(uint gameid) public  returns(Game2 memory){
 }   
 
 function tosha(string memory move) public view returns(bytes32){
-    return sha256(abi.encodePacked(move));
+    uint num = st2num(move);
+    num = num%1009;
+    string memory nums = Strings.toString(num);
+    return sha256(abi.encodePacked(nums));
 }
 
+function currentgameid() public view returns(uint){
+    return gamecount-1;
+}
+
+function gamewinner(uint gameid) public view returns(uint){
+    return games[gameid].gamewinner;
+
+}
 
 }
