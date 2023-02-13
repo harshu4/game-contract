@@ -2,19 +2,31 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { ConnectWallet, useAddress,ThirdwebProvider,ChainId,useContract,useMintNFT } from "@thirdweb-dev/react";
-
+import { ConnectWallet, useAddress,ThirdwebProvider,ChainId,useContract,useMintNFT,useListings ,useBuyNow, useCreateDirectListing} from "@thirdweb-dev/react";
+import {NATIVE_TOKEN_ADDRESS} from "@thirdweb-dev/sdk"
+import { ethers } from 'ethers';
 const App = () => {
   const [nfts, setNfts] = useState([]);
   const address = useAddress();
   const [isConnected, setIsConnected] = useState(false);
-  const { contract } = useContract("0xE051D132b4Aeae3Bb3E3BEaC20f8e4989c41Bf4c");
-  const {
-    mutate: mintNft,
-    isLoading,
-    error,
-  } = useMintNFT(contract);
-  const metadata = {
+  const { contract } = useContract("0xADb1edc91933891Cd0E558A3e96777b6cF37D163");
+   const { data: listings, isLoading, error } = useListings(contract, { start: 0, count: 100 });
+    const [showLoader, setShowLoader] = useState(true);
+  /* const {
+    mutate: createlisting,
+    load,
+    err,
+  } = useCreateDirectListing(contract);*/
+   const {
+    mutate: buyNow,
+    Loading,
+    errors,
+  } = useBuyNow(contract);
+
+
+//createDirectListing(directListingData)
+ 
+  /*const metadata = {
     name: "Cool NFT",
     description: "This is a cool NFT",
     image: "https://www.carlogos.org/logo/Jaguar-logo-2012-640x287.jpg" // This can be an image url or file
@@ -23,7 +35,24 @@ const App = () => {
   const metadataWithSupply = {
     metadata,
     supply: 1000, // The number of this NFT you want to mint
-  }
+  } */
+
+  const listing = {
+  // address of the contract the asset you want to list is on
+  assetContractAddress: "0xe051d132b4aeae3bb3e3beac20f8e4989c41bf4c",
+  // token ID of the asset you want to list
+  tokenId: "1",
+  // when should the listing open up for offers
+  startTimestamp: new Date(),
+  // how long the listing will be open for
+  listingDurationInSeconds: 8640000,
+  // how many of the asset you want to list
+  quantity: 20,
+  // address of the currency contract that will be used to pay for the listing
+  currencyContractAddress: NATIVE_TOKEN_ADDRESS,
+  // how much the asset will be sold for
+  buyoutPricePerToken: "0.01",
+}
   // Dummy data for the nfts
   const dummyNfts = [
     {
@@ -47,15 +76,25 @@ const App = () => {
   ];
 
   useEffect(() => {
+    if(listings){
+    console.log(listings);
+    setNfts(listings);
+    setShowLoader(false);
+    }
+    
     // Set the dummy data to the nfts state
-    setNfts(dummyNfts);
-  }, []);
+  }, [listings]);
 
-  const handleBuyClick = () => {
+  const handleBuyClick = async (nft) => {
     if (address) {
-      console.log(contract)
-      console.log(mintNft)
-      mintNft({...metadataWithSupply,to:address});
+ /*     const tx = await contract.direct.createListing(listing);
+const receipt = tx.receipt; // the transaction receipt
+const id = tx.id; // the id of the newly created listing*/
+setShowLoader(true);
+    await contract.buyoutListing(nft.id, 1);
+    setShowLoader(false);
+    toast.success("NFT bought successfully")
+      
     } else {
       toast.error('Please connect your wallet to buy NFTs');
     }
@@ -63,9 +102,14 @@ const App = () => {
   return (
     <div>
        <header>
+        {showLoader && (
+        <div className="loader">
+          <div className="spinner"></div>
+        </div>
+      )}
         <div className="logo">
-          <img src="/solana-logo.svg" alt="Solana" />
-          <h1>Solana NFT Marketplace</h1>
+        
+          <h1>NFT Marketplace</h1>
         </div>
         <div>
       <ConnectWallet />
@@ -75,14 +119,17 @@ const App = () => {
         {nfts.map((nft) => (
           <div className="card" key={nft.id}>
             <div className="card-image">
-              <img src={nft.image} alt={nft.name} />
+              <img src={nft.asset.image} alt={nft.name} />
             </div>
             <div className="card-info">
-              <h3>{nft.name}</h3>
-              <p>{nft.description}</p>
+              <h3>{nft.asset.name}</h3>
+              <p>{nft.asset.description}</p>
+              <p> Quantity : {nft.quantity.toString()}</p>
+              <h3>{ethers.utils.formatEther(nft.buyoutPrice)} Matic</h3>     
+
             </div>
             <div className="card-actions">
-              <button className="buy-button" onClick={handleBuyClick}>Buy</button>
+              <button className="buy-button" onClick={() => handleBuyClick(nft)}>Buy</button>
             </div>
           </div>
         ))}
