@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.18;
+pragma solidity 0.8.17;
 import "@openzeppelin/contracts/utils/Strings.sol";
 
 
@@ -71,6 +71,16 @@ IERC1155 nft;
     uint gamewinner;
  }
 
+struct Game2 {
+    uint gameid;
+    address player1;
+    address player2;
+    uint currentmove ;
+    bool player1turn;
+    bool gamestarted;
+    bool gameeneded;
+    uint gamewinner;
+ }
 mapping (uint => Game) games;
 uint gamecount;
 
@@ -127,7 +137,7 @@ function playmove1(uint gameid,bytes32 move) public{
 
 function reversemove(uint gameid,uint move) public{
     Game storage game = games[gameid];
-    require(game.player1turn = false);
+    require(game.player1turn == false);
      require(game.gameeneded == false,"add more allowance");
     
     require(game.player1movehide[game.currentmove]!= 0);
@@ -142,9 +152,9 @@ function reversemove(uint gameid,uint move) public{
 
 }
 
-function revealmove(uint gameid,uint move) public{
+function revealmove(uint gameid,string memory move) public{
     Game storage game = games[gameid];
-    require(game.player1turn = true);
+    require(game.player1turn == true);
      require(game.gameeneded == false,"add more allowance");
     
     require(game.player1movehide[game.currentmove]!= 0);    
@@ -153,7 +163,7 @@ function revealmove(uint gameid,uint move) public{
    require(sha256(abi.encodePacked(move)) == game.player1movehide[game.currentmove]);
    require(game.currentmove<3);
     
-    game.player1move[game.currentmove] = move;
+    game.player1move[game.currentmove] = st2num(move);
     game.player1turn = true;
     game.currentmove = game.currentmove+1;
     if(game.currentmove == 3){
@@ -218,5 +228,31 @@ function finalize(uint gameid) public {
 
 
 }
+function st2num(string memory numString) public pure returns(uint) {
+        uint  val=0;
+        bytes   memory stringBytes = bytes(numString);
+        for (uint  i =  0; i<stringBytes.length; i++) {
+            uint exp = stringBytes.length - i;
+            bytes1 ival = stringBytes[i];
+            uint8 uval = uint8(ival);
+           uint jval = uval - uint(0x30);
+   
+           val +=  (uint(jval) * (10**(exp-1))); 
+        }
+      return val;
+    }
+
+function game(uint gameid) public  returns(Game2 memory){
+      Game2 memory newGame;
+      newGame.gameid = games[gameid].gameid;
+      newGame.player1 = games[gameid].player1;
+      newGame.player2 = games[gameid].player2;
+      return newGame;
+}   
+
+function tosha(string memory move) public view returns(bytes32){
+    return sha256(abi.encodePacked(move));
+}
+
 
 }
