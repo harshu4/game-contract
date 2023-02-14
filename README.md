@@ -1,4 +1,4 @@
-[4:25 am, 14/02/2023] ~: ## Brief
+## Brief
 
 Game Link :  [Click Here](https://game.galacticwar.live/)
 
